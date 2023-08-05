@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% set active_page = "Dashboard" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}PyFlutter{% endblock %}
+
+{% block content %}
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% block navbar %}
+            {{ super() }}
+        {% endblock %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+            {% block topbar %}
+                {{ super() }}
+            {% endblock %}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+
+                    <div>
+                        {% if current_user.can(Permission.WRITE) %}
+                        {{ wtf.quick_form(form) }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="post-tabs">
+                        <ul class="nav nav-tabs">
+                            <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">All</a></li>
+                            {% if current_user.is_authenticated %}
+                            <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">Followed</a></li>
+                            {% endif %}
+                        </ul>
+                        {% include '_posts.html' %}
+                    </div>
+                    {% if pagination %}
+                    <div class="pagination">
+                        {{ macros.pagination_widget(pagination, '.index') }}
+                    </div>
+                    {% endif %}
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            {% block footer %}
+                {{ super() }}
+            {% endblock %}
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    {% block scrolltotop %}
+        {{ super() }}
+    {% endblock %}
+
+    {% block logoutmodal %}
+        {{ super() }}
+    {% endblock %}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

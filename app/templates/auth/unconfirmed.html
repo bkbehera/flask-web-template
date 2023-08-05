@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% set active_page = "Dashboard" %}
+{% block title %}PyFlutter - Confirm your account{% endblock %}
+
+
+{% block content %}
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% block navbar %}
+            {{ super() }}
+        {% endblock %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+            {% block topbar %}
+                {{ super() }}
+            {% endblock %}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Hello, {{ current_user.username }}!</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+
+                    <h3>You have not confirmed your account yet.</h3>
+                    <p>
+                        Before you can access this site you need to confirm your account.
+                        Check your inbox, you should have received an email with a confirmation link.
+                    </p>
+                    <p>
+                        Need another confirmation email?
+                        <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+                    </p>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            {% block footer %}
+                {{ super() }}
+            {% endblock %}
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    {% block scrolltotop %}
+        {{ super() }}
+    {% endblock %}
+
+    {% block logoutmodal %}
+        {{ super() }}
+    {% endblock %}
+
+{% endblock %}
